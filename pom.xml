@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.fabric8.quickstarts</groupId>
+    <artifactId>spring-boot-camel-mail-exchange-oauth2-imap</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <name>Fabric8 :: Quickstarts :: Spring-Boot :: Camel:: MS Exchage OAuth2 IMAP </name>
+    <description>An example that shows how to use Camel on Spring Boot to connect with
+        IMAP protocol and access email data for Office 365 users using OAuth2 authentication.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- configure the Fuse version you want to use here -->
+        <fuse.bom.version>7.11.0.fuse-sb2-7_11_0-00028-redhat-00001</fuse.bom.version>
+
+        <!-- maven plugin versions -->
+        <maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
+        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <msal4j-version>1.13.2</msal4j-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.redhat-fuse</groupId>
+                <artifactId>fuse-springboot-bom</artifactId>
+                <version>${fuse.bom.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-mail-starter</artifactId>
+        </dependency>
+
+        <!--Microsoft Authentication Library for Java  -->
+        <dependency>
+            <groupId>com.microsoft.azure</groupId>
+            <artifactId>msal4j</artifactId>
+            <version>${msal4j-version}</version>
+        </dependency>
+
+    </dependencies>
+
+
+
+    <build>
+        <defaultGoal>spring-boot:run</defaultGoal>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <inherited>true</inherited>
+                <configuration>
+                    <rerunFailingTestsCount>3</rerunFailingTestsCount>
+                    <excludes>
+                        <exclude>**/*KT.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.jboss.redhat-fuse</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${fuse.bom.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+
+        <pluginManagement/>
+    </build>
+
+    <repositories>
+
+        <repository>
+            <id>maven.central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+
+
+        <repository>
+            <id>redhat.ga</id>
+            <name>Red Hat General Availability Repository</name>
+            <url>https://maven.repository.redhat.com/ga</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+
+
+        <repository>
+            <id>redhat.ea</id>
+            <name>Red Hat Early Access Repository</name>
+            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </repository>
+
+    </repositories>
+
+    <pluginRepositories>
+
+        <pluginRepository>
+            <id>maven.central</id>
+            <name>Maven Central</name>
+            <url>https://repo1.maven.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+
+
+        <pluginRepository>
+            <id>redhat.ga</id>
+            <name>Red Hat General Availability Repository</name>
+            <url>https://maven.repository.redhat.com/ga</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+
+
+        <pluginRepository>
+            <id>redhat.ea</id>
+            <name>Red Hat Early Access Repository</name>
+            <url>https://maven.repository.redhat.com/earlyaccess/all</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+                <updatePolicy>never</updatePolicy>
+            </releases>
+        </pluginRepository>
+
+    </pluginRepositories>
+</project>
